@@ -97,14 +97,14 @@ namespace CALICE {
 			return false;
 		}
 		float Ekin = sqrt(aMCparticle->getEnergy()*aMCparticle->getEnergy()-aMCparticle->getMass()*aMCparticle->getMass());
-		float dieOffset  = 40.0;
+		float dieOffset  = 50.0;
 		float bornOffset = _distanceCut;
 		float mcDistance = MathOperator::getDistance(aMCparticle->getVertex(),aMCparticle->getEndpoint());
 		float pt =  sqrt(aMCparticle->getMomentum()[1]*aMCparticle->getMomentum()[1]+aMCparticle->getMomentum()[0]*aMCparticle->getMomentum()[0]*aMCparticle->getMomentum()[0]);
 		//float tan = pt / aMCparticle->getMomentum()[2];
 		return ( mcDistance > _distanceCut &&
 		//Ekin > _ekinCut && mcDistance > dieOffset)&&
-		aMCparticle->getMomentum()[2]>0 &&
+		//aMCparticle->getMomentum()[2]>0 &&
 		aMCparticle->getVertex()[2] > volumeECal->at(2)[0] - 2*bornOffset &&
 		aMCparticle->getVertex()[2] < volumeECal->at(2)[1]  - bornOffset &&
 
@@ -116,7 +116,7 @@ namespace CALICE {
 
 		((abs(aMCparticle->getEndpoint()[0]) > volumeECal->at(0)[1] - dieOffset ||
 		abs(aMCparticle->getEndpoint()[1]) > volumeECal->at(1)[1]  - dieOffset ||
-		((pt > 0.30 && Ekin > _ekinCut )||
+		((pt > 0.20 && Ekin > _ekinCut )||
 		aMCparticle->getEndpoint()[2] > volumeECal->at(2)[1] - dieOffset)) && aMCparticle->getMass() > 0.01)); //|| 
 		//(tan > _angleCut && Ekin > _ekinCut));
 	}
