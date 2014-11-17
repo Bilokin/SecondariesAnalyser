@@ -59,7 +59,12 @@ namespace CALICE {
 		_MCTree->Branch("startX", _startX,"startX[nMCparticles]/F");
 		_MCTree->Branch("startY", _startY,"startY[nMCparticles]/F");
 		_MCTree->Branch("startZ", _startZ,"startZ[nMCparticles]/F");
-		_MCTree->Branch("zmomentum", _zmomentum,"zmomentum[nMCparticles]/F");
+		_MCTree->Branch("momentumZ", _zmomentum,"momentumZ[nMCparticles]/F");
+		_MCTree->Branch("momentumX", _xmomentum,"momentumX[nMCparticles]/F");
+		_MCTree->Branch("momentumY", _ymomentum,"momentumY[nMCparticles]/F");
+		_MCTree->Branch("phi", _phi,"phi[nMCparticles]/F");
+		_MCTree->Branch("teta", _teta,"teta[nMCparticles]/F");
+
 		_MCTree->Branch("energy_kin",_energy_kin,"energy_kin[nMCparticles]/F");
 		_MCTree->Branch("energy",_energy, "energy[nMCparticles]/F");
 		_MCTree->Branch("mass",_mass, "mass[nMCparticles]/F");
@@ -169,12 +174,18 @@ namespace CALICE {
 		_startY[_nMCparticles] = aMCparticle->getVertex()[1];
 		_startZ[_nMCparticles] = aMCparticle->getVertex()[2];
 		_zmomentum[_nMCparticles] = aMCparticle->getMomentum()[2];
+		_xmomentum[_nMCparticles] = aMCparticle->getMomentum()[0];
+		_ymomentum[_nMCparticles] = aMCparticle->getMomentum()[1];
 		_endX[_nMCparticles] = aMCparticle->getEndpoint()[0];
 		_endY[_nMCparticles] = aMCparticle->getEndpoint()[1];
 		_endZ[_nMCparticles] = aMCparticle->getEndpoint()[2];
 		_energy[_nMCparticles] = aMCparticle->getEnergy();
 		_energy_kin[_nMCparticles] = sqrt(aMCparticle->getEnergy()*aMCparticle->getEnergy()-aMCparticle->getMass()*aMCparticle->getEnergy()-aMCparticle->getMass()*aMCparticle->getMass());
 		_distance[_nMCparticles] = MathOperator::getDistance(aMCparticle->getVertex(), aMCparticle->getEndpoint());
+		vector<float> direction = MathOperator::getDirection(aMCparticle->getVertex(), aMCparticle->getEndpoint());
+		vector<float> angles = MathOperator::getAngles(direction);
+		_phi[_nMCparticles] = angles[0];
+		_teta[_nMCparticles] = 3.14159 - angles[1];
 
 	}
 	void SecondariesAnalyser::processMCparticles(LCEvent * evt)

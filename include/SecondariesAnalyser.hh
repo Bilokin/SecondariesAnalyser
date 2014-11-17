@@ -91,6 +91,10 @@ namespace CALICE {
 		float _energy_kin[MAXN];
 		float _mass[MAXN];
 		float _zmomentum[MAXN];
+		float _xmomentum[MAXN];
+		float _ymomentum[MAXN];
+		float _phi[MAXN];
+		float _teta[MAXN];
 		int _charge[MAXN];
 		float _distance[MAXN];
 		vector< vector< float > > * volumeECal;
